@@ -1,0 +1,49 @@
+@model List<AcxiomCRM.Models.Lead>
+@{
+    ViewData["Title"] = "Lead Report | AcxiomCRM";
+    string status = ViewBag.Status as string ?? "";
+    string source = ViewBag.Source as string ?? "";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    var emails = ViewBag.OwnerEmails as Dictionary<string, string> ?? new();
+}
+<h1>Lead Report</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.LeadTransitions.Statuses)
+            {
+                <option value="@st" selected="@(status == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="source" class="form-label">Source</label>
+        <input id="source" name="source" value="@source" class="form-control" />
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <a asp-action="Leads" asp-route-status="@status" asp-route-source="@source" asp-route-export="csv" class="btn btn-secondary">Export CSV</a>
+    </div>
+</form>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Source</th><th>Status</th><th>Owner</th><th>Converted</th></tr></thead>
+    <tbody>
+    @foreach (var l in Model)
+    {
+        <tr><td>@l.LeadName</td><td>@l.Source</td><td>@l.Status</td><td>@(l.OwnerId != null && emails.TryGetValue(l.OwnerId, out var e) ? e : "-")</td><td>@(l.Status == "Converted" ? "Yes" : "No")</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<nav aria-label="Lead report pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")"><a class="page-link" asp-action="Leads" asp-route-status="@status" asp-route-source="@source" asp-route-page="@p">Page @p</a></li>
+    }
+</ul>
+</nav>

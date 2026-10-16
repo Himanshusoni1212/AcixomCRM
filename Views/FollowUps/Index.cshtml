@@ -1,0 +1,91 @@
+@model List<AcxiomCRM.Models.FollowUp>
+@{
+    ViewData["Title"] = "Follow-Ups | AcxiomCRM";
+    string status = ViewBag.Status as string ?? "";
+    string assignee = ViewBag.Assignee as string ?? "";
+    string related = ViewBag.Related as string ?? "";
+    string df = ViewBag.DateFrom as string ?? "";
+    string dt = ViewBag.DateTo as string ?? "";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int total = ViewBag.Total ?? 0;
+    var names = ViewBag.RelatedNames as Dictionary<int, string> ?? new();
+    var emails = ViewBag.AssigneeEmails as Dictionary<string, string> ?? new();
+}
+<h1>Follow-Ups</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+@if (TempData["Error"] is string e) { <div class="alert alert-danger" role="alert">@e</div> }
+
+<form method="get" class="row g-2 mb-3" role="search" aria-label="Search follow-ups">
+    <div class="col-md-2">
+        <label for="dateFrom" class="form-label">From date</label>
+        <input id="dateFrom" name="dateFrom" type="date" value="@df" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label for="dateTo" class="form-label">To date</label>
+        <input id="dateTo" name="dateTo" type="date" value="@dt" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.FollowUpTransitions.Statuses)
+            {
+                <option value="@st" selected="@(status == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="assignee" class="form-label">Assigned user</label>
+        <input id="assignee" name="assignee" value="@assignee" class="form-control" autocomplete="off" aria-describedby="assignee-hint" />
+        <div id="assignee-hint" class="form-text">Filter by assignee name or email.</div>
+    </div>
+    <div class="col-md-3">
+        <label for="related" class="form-label">Related customer or lead</label>
+        <input id="related" name="related" value="@related" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Search follow-ups</button>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Schedule follow-up</a>
+    <a asp-action="Upcoming" class="btn btn-secondary">Upcoming follow-ups</a>
+    <a asp-action="Overdue" class="btn btn-secondary">Overdue follow-ups</a>
+    <span class="text-muted">@total record(s)</span>
+</p>
+
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Date</th><th>Subject</th><th>Related</th><th>Status</th><th>Assigned to</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var f in Model)
+    {
+        <tr>
+            <td>@f.FollowUpDate.ToString("yyyy-MM-dd")</td>
+            <td>@f.Subject</td>
+            <td>@(names.TryGetValue(f.FollowUpId, out var n) ? $"{f.RelatedType}: {n}" : f.RelatedType)</td>
+            <td>@f.Status</td>
+            <td>@(f.AssignedTo != null && emails.TryGetValue(f.AssignedTo, out var em) ? em : "-")</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@f.FollowUpId">View details</a> |
+                <a asp-action="Edit" asp-route-id="@f.FollowUpId">Edit follow-up</a> |
+                <a asp-action="Delete" asp-route-id="@f.FollowUpId">Delete follow-up</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+<nav aria-label="Follow-up pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")">
+            <a class="page-link" asp-action="Index" asp-route-dateFrom="@df" asp-route-dateTo="@dt" asp-route-status="@status" asp-route-assignee="@assignee" asp-route-related="@related" asp-route-page="@p">Page @p</a>
+        </li>
+    }
+</ul>
+</nav>

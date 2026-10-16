@@ -1,0 +1,33 @@
+@model AcxiomCRM.Models.FollowUp
+@{
+    ViewData["Title"] = "Follow-up details | AcxiomCRM";
+}
+<h1>Follow-up details</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+@if (TempData["Error"] is string e) { <div class="alert alert-danger" role="alert">@e</div> }
+<dl class="row">
+    <dt class="col-sm-3">Date</dt><dd class="col-sm-9">@Model.FollowUpDate.ToString("yyyy-MM-dd")</dd>
+    <dt class="col-sm-3">Subject</dt><dd class="col-sm-9">@Model.Subject</dd>
+    <dt class="col-sm-3">Type</dt><dd class="col-sm-9">@Model.FollowUpType</dd>
+    <dt class="col-sm-3">Related</dt><dd class="col-sm-9">@Model.RelatedType #@Model.RelatedId (@ViewBag.RelatedName)</dd>
+    <dt class="col-sm-3">Status</dt><dd class="col-sm-9">@Model.Status</dd>
+    <dt class="col-sm-3">Assigned to</dt><dd class="col-sm-9">@ViewBag.AssigneeEmail</dd>
+    <dt class="col-sm-3">Remarks</dt><dd class="col-sm-9">@Model.Remarks</dd>
+</dl>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.FollowUpId" class="btn btn-primary">Edit follow-up</a>
+    @if (Model.Status == "Planned")
+    {
+        <form asp-action="Complete" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.FollowUpId" />
+            <button type="submit" class="btn btn-primary">Complete follow-up</button>
+        </form>
+        <form asp-action="Missed" method="post" class="d-inline" onsubmit="return confirm('Mark this follow-up missed?');">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.FollowUpId" />
+            <button type="submit" class="btn btn-secondary">Mark missed</button>
+        </form>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+</p>

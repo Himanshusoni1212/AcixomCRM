@@ -1,0 +1,35 @@
+@model List<AcxiomCRM.Models.Opportunity>
+@{
+    ViewData["Title"] = "Sales pipeline | AcxiomCRM";
+}
+<h1>Sales pipeline</h1>
+<p>Open pipeline: <strong>@(((decimal)ViewBag.TotalPipeline).ToString("N2"))</strong> |
+   Weighted: <strong>@(((decimal)ViewBag.TotalWeighted).ToString("N2"))</strong> (Amount x Probability / 100)</p>
+<p><a asp-action="Index" class="btn btn-secondary">Back to list</a></p>
+<div class="row">
+@foreach (var stage in AcxiomCRM.Models.OpportunityTransitions.Stages)
+{
+    var cols = Model.Where(o => o.Stage == stage).ToList();
+    var sum = cols.Sum(o => o.Amount);
+    <div class="col-md-4 col-lg-2 mb-3">
+        <section aria-label="@stage stage">
+            <h2 class="h5">@stage (@cols.Count), total @sum.ToString("N2")</h2>
+            @foreach (var o in cols)
+            {
+                <article class="card mb-2">
+                    <div class="card-body">
+                        <h3 class="h6 card-title">@o.OpportunityName</h3>
+                        <p class="card-text">
+                            @(o.Customer?.CustomerName ?? $"Customer {o.CustomerId}")<br />
+                            Amount @o.Amount.ToString("N2") | @o.Probability%<br />
+                            Weighted @((o.Amount * o.Probability / 100).ToString("N2"))
+                        </p>
+                        <a asp-action="Details" asp-route-id="@o.OpportunityId" class="card-link">View details</a>
+                        <a asp-action="Edit" asp-route-id="@o.OpportunityId" class="card-link">Move stage</a>
+                    </div>
+                </article>
+            }
+        </section>
+    </div>
+}
+</div>

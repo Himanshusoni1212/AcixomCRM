@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Cookie Policy | AcxiomCRM";
+    ViewData["Description"] = "AcxiomCRM Cookie Policy: necessary sign-in and security cookies, how optional cookies need prior consent, and changing your choice.";
+}
+<h1>Cookie Policy</h1>
+<p><strong>Version 1.0, dated 16 October 2026.</strong></p>
+
+<h2>1. Strictly necessary cookies (always on, no consent needed)</h2>
+<p>These are required for sign-in and security and are disclosed here:</p>
+<ul>
+    <li>Authentication session cookie: keeps signed-in users signed in (HttpOnly, Secure, SameSite Lax, about 8 hours).</li>
+    <li>Anti-forgery cookie: protects forms against forgery attacks (session duration).</li>
+    <li>Consent record cookie (<code>acxiom_consent</code>): remembers the cookie choice made in the banner (up to 1 year).</li>
+</ul>
+
+<h2>2. Optional cookies (need prior opt-in)</h2>
+<p>Optional categories are analytics, embedded media, chat widgets and advertising. This deployment enables none of them by default, so choosing Reject leaves the site fully functional. If the organisation enables an optional provider later, it will load only after prior consent, and this table will be updated with the provider name, purpose, data shared and retention before activation.</p>
+
+<h2>3. How consent works</h2>
+<p>On a first visit a banner offers two equal choices: Accept optional cookies or Reject optional cookies. The choice is recorded with a timestamp in the consent log and in the <code>acxiom_consent</code> cookie. Strictly necessary cookies continue in both cases. The choice can be changed at any time through Cookie Preferences in the footer, which reopens the banner. There are no dark patterns: both buttons are equally visible and withdrawing consent is as easy as giving it.</p>
+
+<h2>4. Analytics</h2>
+<p>Analytics are OFF by default. If enabled in future, they will use IP anonymisation, no cross-site sharing, a maximum 14 month retention, no sale of data, and a clear opt-out through Cookie Preferences.</p>
+
+<h2>5. Managing cookies in the browser</h2>
+<p>Browsers can block or delete cookies in their settings. Blocking strictly necessary cookies will sign the user out or break forms, since the service cannot verify requests without them.</p>
+<p>Version history: 1.0 (16 October 2026): first published version.</p>

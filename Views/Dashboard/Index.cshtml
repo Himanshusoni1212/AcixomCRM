@@ -1,0 +1,135 @@
+@model AcxiomCRM.Services.DashboardData
+@{
+    ViewData["Title"] = "Dashboard | AcxiomCRM";
+    ViewData["Description"] = "AcxiomCRM dashboard with role-scoped KPIs for customers, leads and pipeline value, plus lead status, pipeline and monthly sales charts.";
+    string range = ViewBag.Range as string ?? "all";
+    string from = ViewBag.From as string ?? "";
+    string to = ViewBag.To as string ?? "";
+    string qs = $"range={range}&from={from}&to={to}";
+}
+<h1>Dashboard</h1>
+
+<form method="get" class="row g-2 mb-3" aria-label="Dashboard date filter">
+    <div class="col-md-3">
+        <label for="range" class="form-label">Period</label>
+        <select id="range" name="range" class="form-select">
+            <option value="all" selected="@(range == "all")">All time</option>
+            <option value="today" selected="@(range == "today")">Today</option>
+            <option value="week" selected="@(range == "week")">This week</option>
+            <option value="month" selected="@(range == "month")">This month</option>
+            <option value="custom" selected="@(range == "custom")">Custom range</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="from" class="form-label">From</label>
+        <input id="from" name="from" type="date" value="@from" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label for="to" class="form-label">To</label>
+        <input id="to" name="to" type="date" value="@to" class="form-control" />
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Apply period</button>
+    </div>
+</form>
+
+<div class="row" role="list" aria-label="Key metrics">
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Total Customers</h2><p class="card-text display-6" id="kpi-customers">@Model.TotalCustomers</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Total Leads</h2><p class="card-text display-6" id="kpi-leads">@Model.TotalLeads</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Open Leads</h2><p class="card-text display-6">@Model.OpenLeads</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Total Opportunities</h2><p class="card-text display-6">@Model.TotalOpportunities</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Open Opportunities</h2><p class="card-text display-6">@Model.OpenOpportunities</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Won Opportunities</h2><p class="card-text display-6">@Model.WonOpportunities</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Lost Opportunities</h2><p class="card-text display-6">@Model.LostOpportunities</p></div></div></div>
+    <div class="col-md-3 mb-3"><div class="card" role="listitem"><div class="card-body"><h2 class="h6 card-title">Total Pipeline Value</h2><p class="card-text display-6" id="kpi-pipeline">@Model.TotalPipelineValue.ToString("N2")</p></div></div></div>
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <h2>Administration</h2>
+    <div class="row">
+        <div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h3 class="h6 card-title">Total Users</h3><p class="card-text display-6">@Model.TotalUsers</p></div></div></div>
+        <div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h3 class="h6 card-title">Locked-Out Users</h3><p class="card-text display-6">@Model.LockedOutUsers</p></div></div></div>
+        <div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h3 class="h6 card-title">Audit Events</h3><p class="card-text display-6">@Model.AuditEvents</p></div></div></div>
+    </div>
+}
+
+<h2>Charts</h2>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <section aria-label="Lead status chart">
+            <h3 class="h6">Lead Status</h3>
+            <canvas id="chart-leads" role="img" aria-label="Bar chart of leads by status"></canvas>
+        </section>
+    </div>
+    <div class="col-md-6 mb-3">
+        <section aria-label="Opportunity pipeline chart">
+            <h3 class="h6">Opportunity Pipeline</h3>
+            <canvas id="chart-pipeline" role="img" aria-label="Bar chart of opportunities by stage"></canvas>
+        </section>
+    </div>
+    <div class="col-md-12 mb-3">
+        <section aria-label="Monthly sales chart">
+            <h3 class="h6">Monthly Sales (Won, last 6 months)</h3>
+            <canvas id="chart-sales" role="img" aria-label="Line chart of won amounts by month"></canvas>
+        </section>
+    </div>
+</div>
+
+<h2>My Upcoming Follow-Ups</h2>
+@if (!Model.UpcomingFollowUps.Any())
+{
+    <p>No upcoming follow-ups.</p>
+}
+else
+{
+    <div class="table-responsive">
+    <table class="table">
+        <thead><tr><th>Date</th><th>Subject</th><th>Status</th></tr></thead>
+        <tbody>
+        @foreach (var f in Model.UpcomingFollowUps)
+        {
+            <tr><td>@f.FollowUpDate.ToString("yyyy-MM-dd")</td><td>@f.Subject</td><td>@f.Status</td></tr>
+        }
+        </tbody>
+    </table>
+    </div>
+}
+
+<p><a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">View reports</a></p>
+
+@section Scripts {
+    <script src="~/lib/chart.js/chart.umd.min.js"></script>
+    <script>
+        (function () {
+            var base = '/api/dashboard';
+            var qs = '@Html.Raw(qs)';
+            function url(path) { return base + path + '?' + qs; }
+            var calm = { animation: false, responsive: true, maintainAspectRatio: true };
+            function palette(n) {
+                var colors = ['#1e3a5f', '#0f766e', '#64748b', '#b45309', '#166534', '#991b1b'];
+                var out = [];
+                for (var i = 0; i < n; i++) out.push(colors[i % colors.length]);
+                return out;
+            }
+            function bar(id, endpoint) {
+                fetch(url(endpoint)).then(function (r) { return r.json(); }).then(function (d) {
+                    new Chart(document.getElementById(id), {
+                        type: 'bar',
+                        data: { labels: d.labels, datasets: [{ data: d.data, backgroundColor: palette(d.data.length) }] },
+                        options: Object.assign({ plugins: { legend: { display: false } } }, calm)
+                    });
+                });
+            }
+            bar('chart-leads', '/lead-status');
+            bar('chart-pipeline', '/opportunity-pipeline');
+            fetch(base + '/monthly-sales').then(function (r) { return r.json(); }).then(function (d) {
+                new Chart(document.getElementById('chart-sales'), {
+                    type: 'line',
+                    data: { labels: d.labels, datasets: [{ data: d.data, borderColor: '#1e3a5f', backgroundColor: '#1e3a5f', fill: false }] },
+                    options: Object.assign({ plugins: { legend: { display: false } } }, calm)
+                });
+            });
+        })();
+    </script>
+}

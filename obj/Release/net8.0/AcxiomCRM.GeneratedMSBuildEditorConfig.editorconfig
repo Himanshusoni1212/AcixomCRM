@@ -1,0 +1,259 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = AcxiomCRM
+build_property.RootNamespace = AcxiomCRM
+build_property.ProjectDir = /home/gaouravpatil/axiome/AcxiomCRM/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /home/gaouravpatil/axiome/AcxiomCRM
+build_property._RazorSourceGeneratorDebug = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Areas/Identity/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Activities/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWN0aXZpdGllcy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Activities/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWN0aXZpdGllcy9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Activities/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWN0aXZpdGllcy9EZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Activities/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWN0aXZpdGllcy9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Activities/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWN0aXZpdGllcy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/AuditLogs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXVkaXRMb2dzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Customers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3VzdG9tZXJzL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Customers/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3VzdG9tZXJzL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Customers/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3VzdG9tZXJzL0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Customers/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3VzdG9tZXJzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Customers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3VzdG9tZXJzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Overdue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL092ZXJkdWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/FollowUps/Upcoming.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRm9sbG93VXBzL1VwY29taW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Home/Forbidden.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Gb3JiaWRkZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Home/NotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Ob3RGb3VuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Leads/Convert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhZHMvQ29udmVydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Leads/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhZHMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Leads/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhZHMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Leads/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhZHMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Leads/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhZHMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Leads/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhZHMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Legal/Cookies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVnYWwvQ29va2llcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Legal/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVnYWwvUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Legal/Refunds.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVnYWwvUmVmdW5kcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Legal/Terms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVnYWwvVGVybXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Opportunities/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3Bwb3J0dW5pdGllcy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Opportunities/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3Bwb3J0dW5pdGllcy9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Opportunities/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3Bwb3J0dW5pdGllcy9EZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Opportunities/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3Bwb3J0dW5pdGllcy9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Opportunities/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3Bwb3J0dW5pdGllcy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Opportunities/Pipeline.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3Bwb3J0dW5pdGllcy9QaXBlbGluZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Audit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9BdWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Customers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DdXN0b21lcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/FollowUps.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9Gb2xsb3dVcHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Leads.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9MZWFkcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Opportunities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9PcHBvcnR1bml0aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Pipeline.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9QaXBlbGluZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/Sales.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9TYWxlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Reports/UserActivity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9Vc2VyQWN0aXZpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Shared/_CookieConsent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Db29raWVDb25zZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Users/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlcnMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/gaouravpatil/axiome/AcxiomCRM/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-ti68g77mbu

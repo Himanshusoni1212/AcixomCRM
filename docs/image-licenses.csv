@@ -1,0 +1,6 @@
+file,source,license,notes
+icon-192.png,generated in-repo with PIL (Liberation Sans Bold lettermark),own work,app icon
+icon-512.png,generated in-repo with PIL (Liberation Sans Bold lettermark),own work,app icon
+apple-touch-icon.png,generated in-repo with PIL (Liberation Sans Bold lettermark),own work,app icon
+favicon.ico,ASP.NET template default,replaced at launch if branded,replace with brand mark before launch
+NO PHOTOGRAPHS: site ships zero photographic/stock imagery by design; no third-party image copyright risk.,n/a,n/a

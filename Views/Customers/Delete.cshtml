@@ -1,0 +1,12 @@
+@model AcxiomCRM.Models.Customer
+@{
+    ViewData["Title"] = "Delete customer | AcxiomCRM";
+}
+<h1>Delete customer</h1>
+<div class="alert alert-warning" role="alert">Are you sure you want to delete <strong>@Model.CustomerName</strong> (@Model.Email)? This cannot be undone.</div>
+<form asp-action="Delete" method="post" onsubmit="return confirm('Delete this customer?');">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="CustomerId" />
+    <button type="submit" class="btn btn-danger">Delete customer</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

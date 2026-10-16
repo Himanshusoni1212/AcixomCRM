@@ -1,0 +1,70 @@
+@model AcxiomCRM.Models.FollowUp
+@{
+    ViewData["Title"] = "Edit follow-up | AcxiomCRM";
+    var sales = ViewBag.SalesUsers as IList<AcxiomCRM.Models.ApplicationUser> ?? new List<AcxiomCRM.Models.ApplicationUser>();
+    bool isSales = User.IsInRole("SalesExecutive");
+}
+<h1>Edit follow-up</h1>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form asp-action="Edit" method="post" novalidate>
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="FollowUpId" />
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="RelatedType" class="form-label">Related record type</label>
+            <select id="RelatedType" name="RelatedType" class="form-select">
+                @foreach (var t in AcxiomCRM.Models.FollowUpTransitions.RelatedTypes)
+                {
+                    <option value="@t" selected="@(Model.RelatedType == t)">@t</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="RelatedId" class="form-label">Related record ID</label>
+            <input asp-for="RelatedId" class="form-control" type="number" min="1" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FollowUpDate" class="form-label"></label>
+        <input asp-for="FollowUpDate" class="form-control" type="date" aria-describedby="FollowUpDate-error" />
+        <span asp-validation-for="FollowUpDate" class="text-danger" id="FollowUpDate-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Subject" class="form-label"></label>
+        <input asp-for="Subject" class="form-control" aria-describedby="Subject-error" />
+        <span asp-validation-for="Subject" class="text-danger" id="Subject-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            @foreach (var st in AcxiomCRM.Models.FollowUpTransitions.Statuses)
+            {
+                <option value="@st" selected="@(Model.Status == st)">@st</option>
+            }
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    @if (isSales)
+    {
+        <input type="hidden" asp-for="AssignedTo" />
+    }
+    else
+    {
+        <div class="mb-3">
+            <label for="AssignedTo" class="form-label">Assigned to (Sales Executive)</label>
+            <select id="AssignedTo" name="AssignedTo" class="form-select">
+                @foreach (var u in sales)
+                {
+                    <option value="@u.Id" selected="@(Model.AssignedTo == u.Id)">@u.Email (@u.FullName)</option>
+                }
+            </select>
+        </div>
+    }
+    <div class="mb-3">
+        <label asp-for="Remarks" class="form-label"></label>
+        <textarea asp-for="Remarks" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Follow-Up</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

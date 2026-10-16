@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@(ViewData["Description"] ?? "AcxiomCRM is a role-based CRM for customers, leads, opportunities and follow-ups with dashboards, reports, secure sign-in and audit logging.")" />
+    <meta property="og:title" content="@(ViewData["Title"] ?? "AcxiomCRM")" />
+    <meta property="og:description" content="@(ViewData["Description"] ?? "Role-based CRM for customers, leads, opportunities, follow-ups and reports.")" />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
+    <link rel="icon" href="~/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="192x192" href="~/icon-192.png" />
+    <link rel="apple-touch-icon" href="~/apple-touch-icon.png" />
+    <link rel="manifest" href="~/site.webmanifest" />
+    <meta name="theme-color" content="#1e3a5f" />
+    <title>@ViewData["Title"] - AcxiomCRM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AcxiomCRM.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom box-shadow" aria-label="Primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">AcxiomCRM</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNav"
+                        aria-controls="primaryNav" aria-expanded="false" aria-label="Toggle navigation" id="navToggle">
+                    <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="primaryNav">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Leads" asp-action="Index">Leads</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Opportunities" asp-action="Index">Opportunities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="FollowUps" asp-action="Index">Follow-Ups</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Activities" asp-action="Index">Activities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AuditLogs" asp-action="Index">Audit log</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        }
+                    </ul>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-outline-secondary" aria-label="Notifications, no new notifications">Notifications (0)</button>
+                            <partial name="_LoginPartial" />
+                        </div>
+                    }
+                    else
+                    {
+                        <partial name="_LoginPartial" />
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3" id="main-content" tabindex="-1">
+            @RenderBody()
+        </main>
+    </div>
+
+    <partial name="_CookieConsent" />
+
+    <footer class="border-top footer text-muted">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>AcxiomCRM</strong><br />
+                    <span>123 Business Street, Mumbai, India</span><br />
+                    <a href="tel:+911234567890">+91 12345 67890</a> |
+                    <a href="mailto:support@example.in">support@example.in</a><br />
+                    <span>Mon to Fri, 9:00 to 18:00 IST</span>
+                </div>
+                <div class="col-md-6">
+                    <a asp-area="" asp-controller="Legal" asp-action="Privacy">Privacy Policy</a> |
+                    <a asp-area="" asp-controller="Legal" asp-action="Terms">Terms and Conditions</a> |
+                    <a asp-area="" asp-controller="Legal" asp-action="Cookies">Cookie Policy</a> |
+                    <a asp-area="" asp-controller="Legal" asp-action="Refunds">Refund Policy</a> |
+                    <button type="button" class="btn btn-link p-0 align-baseline" onclick="acxiomCookiePreferences()">Cookie Preferences</button>
+                </div>
+            </div>
+            <div class="mt-2">&copy; 2026 AcxiomCRM. All rights reserved.</div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

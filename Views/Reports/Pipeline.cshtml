@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Pipeline Report | AcxiomCRM";
+    var byStage = ViewBag.ByStage as List<object> ?? new();
+    var byOwner = ViewBag.ByOwner as List<object> ?? new();
+}
+<h1>Pipeline Report</h1>
+<p><a asp-action="Pipeline" asp-route-export="csv" class="btn btn-secondary">Export CSV</a></p>
+<h2>Stage-wise pipeline</h2>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Stage</th><th>Count</th><th>Amount</th><th>Weighted</th></tr></thead>
+    <tbody>
+    @foreach (dynamic s in byStage)
+    {
+        <tr><td>@s.Stage</td><td>@s.Count</td><td>@(((decimal)s.Amount).ToString("N2"))</td><td>@(((decimal)s.Weighted).ToString("N2"))</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<h2>Owner-wise pipeline</h2>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Owner</th><th>Count</th><th>Amount</th><th>Weighted</th></tr></thead>
+    <tbody>
+    @foreach (dynamic s in byOwner)
+    {
+        <tr><td>@s.Owner</td><td>@s.Count</td><td>@(((decimal)s.Amount).ToString("N2"))</td><td>@(((decimal)s.Weighted).ToString("N2"))</td></tr>
+    }
+    </tbody>
+</table>
+</div>

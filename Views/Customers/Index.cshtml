@@ -1,0 +1,74 @@
+@model List<AcxiomCRM.Models.Customer>
+@{
+    ViewData["Title"] = "Customers | AcxiomCRM";
+    string q = ViewBag.Query as string ?? "";
+    string status = ViewBag.Status as string ?? "";
+    string sort = ViewBag.Sort as string ?? "name";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int total = ViewBag.Total ?? 0;
+}
+<h1>Customers</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+
+<form method="get" class="row g-2 mb-3" role="search" aria-label="Search customers">
+    <div class="col-md-5">
+        <label for="q" class="form-label">Search name, email, phone, company</label>
+        <input id="q" name="q" value="@q" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            <option value="Active" selected="@(status == "Active")">Active</option>
+            <option value="Inactive" selected="@(status == "Inactive")">Inactive</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="sort" class="form-label">Sort</label>
+        <select id="sort" name="sort" class="form-select">
+            <option value="name" selected="@(sort == "name")">Name</option>
+            <option value="email" selected="@(sort == "email")">Email</option>
+            <option value="created" selected="@(sort == "created")">Newest</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Search customers</button>
+    </div>
+</form>
+
+<p><a asp-action="Create" class="btn btn-primary">Create customer</a> <span class="text-muted">@total record(s)</span></p>
+
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.CustomerName</td>
+            <td><a href="mailto:@c.Email">@c.Email</a></td>
+            <td><a href="tel:@c.Phone">@c.Phone</a></td>
+            <td>@c.CompanyName</td>
+            <td>@c.Status</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@c.CustomerId">View details</a> |
+                <a asp-action="Edit" asp-route-id="@c.CustomerId">Edit customer</a> |
+                <a asp-action="Delete" asp-route-id="@c.CustomerId">Delete customer</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+<nav aria-label="Customer pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")">
+            <a class="page-link" asp-action="Index" asp-route-q="@q" asp-route-status="@status" asp-route-sort="@sort" asp-route-page="@p">Page @p</a>
+        </li>
+    }
+</ul>
+</nav>

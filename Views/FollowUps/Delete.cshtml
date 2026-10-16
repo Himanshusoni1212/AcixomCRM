@@ -1,0 +1,12 @@
+@model AcxiomCRM.Models.FollowUp
+@{
+    ViewData["Title"] = "Delete follow-up | AcxiomCRM";
+}
+<h1>Delete follow-up</h1>
+<div class="alert alert-warning" role="alert">Are you sure you want to delete the follow-up <strong>@Model.Subject</strong>? This cannot be undone.</div>
+<form asp-action="Delete" method="post" onsubmit="return confirm('Delete this follow-up?');">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="FollowUpId" />
+    <button type="submit" class="btn btn-danger">Delete follow-up</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

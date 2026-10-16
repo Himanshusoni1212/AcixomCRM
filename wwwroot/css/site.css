@@ -1,0 +1,99 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* No horizontal scroll: guard + fluid media. Tables must use .table-responsive wrapper. */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img, table, canvas {
+  max-width: 100%;
+}
+
+/* Neutral professional palette. No gradients, no vibrant fills. */
+body {
+  background-color: #ffffff;
+  color: #1e293b;
+  margin-bottom: 0;
+}
+
+/* Footer flows after content (overrides template absolute positioning that
+   overlapped long pages) and wraps on small screens. */
+.footer {
+  position: static;
+  width: 100%;
+  white-space: normal;
+  line-height: 1.6;
+}
+
+/* Cookie banner renders as a distinct block above the footer. */
+#cookie-banner {
+  background-color: #f8fafc;
+  border-top: 2px solid #1e3a5f;
+}
+
+a {
+  color: #0f766e;
+}
+
+.btn-primary {
+  background-color: #1e3a5f;
+  border-color: #1e3a5f;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #162c48;
+  border-color: #162c48;
+}
+
+/* Visible keyboard focus. Minimum 44px tap targets. */
+:focus-visible {
+  outline: 3px solid #0f766e;
+  outline-offset: 2px;
+}
+
+.btn, .nav-link, .navbar-toggler {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  background: #1e3a5f;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+  color: #fff;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #0f766e;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

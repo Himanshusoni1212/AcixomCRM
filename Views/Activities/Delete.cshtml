@@ -1,0 +1,12 @@
+@model AcxiomCRM.Models.Activity
+@{
+    ViewData["Title"] = "Delete activity | AcxiomCRM";
+}
+<h1>Delete activity</h1>
+<div class="alert alert-warning" role="alert">Are you sure you want to delete the activity <strong>@Model.Subject</strong>? This cannot be undone.</div>
+<form asp-action="Delete" method="post" onsubmit="return confirm('Delete this activity?');">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ActivityId" />
+    <button type="submit" class="btn btn-danger">Delete activity</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

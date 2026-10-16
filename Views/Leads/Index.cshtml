@@ -1,0 +1,84 @@
+@model List<AcxiomCRM.Models.Lead>
+@{
+    ViewData["Title"] = "Leads | AcxiomCRM";
+    string q = ViewBag.Query as string ?? "";
+    string status = ViewBag.Status as string ?? "";
+    string owner = ViewBag.Owner as string ?? "";
+    string sort = ViewBag.Sort as string ?? "name";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int total = ViewBag.Total ?? 0;
+    var ownerEmails = ViewBag.OwnerEmails as Dictionary<string, string?> ?? new();
+}
+<h1>Leads</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+@if (TempData["Error"] is string e) { <div class="alert alert-danger" role="alert">@e</div> }
+
+<form method="get" class="row g-2 mb-3" role="search" aria-label="Search leads">
+    <div class="col-md-3">
+        <label for="q" class="form-label">Search name, company</label>
+        <input id="q" name="q" value="@q" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-2">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.LeadTransitions.Statuses)
+            {
+                <option value="@st" selected="@(status == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="owner" class="form-label">Assigned user</label>
+        <input id="owner" name="owner" value="@owner" class="form-control" autocomplete="off" aria-describedby="owner-hint" />
+        <div id="owner-hint" class="form-text">Filter by assignee name or email.</div>
+    </div>
+    <div class="col-md-2">
+        <label for="sort" class="form-label">Sort</label>
+        <select id="sort" name="sort" class="form-select">
+            <option value="name" selected="@(sort == "name")">Name</option>
+            <option value="company" selected="@(sort == "company")">Company</option>
+            <option value="created" selected="@(sort == "created")">Newest</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Search leads</button>
+    </div>
+</form>
+
+<p><a asp-action="Create" class="btn btn-primary">Create lead</a> <span class="text-muted">@total record(s)</span></p>
+
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Company</th><th>Status</th><th>Assigned to</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var l in Model)
+    {
+        var email = l.OwnerId != null && ownerEmails.TryGetValue(l.OwnerId, out var em) ? em : null;
+        <tr>
+            <td>@l.LeadName</td>
+            <td>@l.CompanyName</td>
+            <td>@l.Status</td>
+            <td>@(email ?? "-")</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@l.LeadId">View details</a> |
+                <a asp-action="Edit" asp-route-id="@l.LeadId">Edit lead</a> |
+                <a asp-action="Delete" asp-route-id="@l.LeadId">Delete lead</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+<nav aria-label="Lead pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")">
+            <a class="page-link" asp-action="Index" asp-route-q="@q" asp-route-status="@status" asp-route-owner="@owner" asp-route-sort="@sort" asp-route-page="@p">Page @p</a>
+        </li>
+    }
+</ul>
+</nav>

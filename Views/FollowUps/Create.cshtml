@@ -1,0 +1,73 @@
+@model AcxiomCRM.Models.FollowUp
+@{
+    ViewData["Title"] = "Schedule follow-up | AcxiomCRM";
+    var sales = ViewBag.SalesUsers as IList<AcxiomCRM.Models.ApplicationUser> ?? new List<AcxiomCRM.Models.ApplicationUser>();
+    bool isSales = User.IsInRole("SalesExecutive");
+}
+<h1>Schedule follow-up</h1>
+<p>Plan contact against a customer, lead or opportunity. The assignee sees it in Upcoming follow-ups. Required fields are marked.</p>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form asp-action="Create" method="post" novalidate>
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="RelatedType" class="form-label">Related record type</label>
+            <select id="RelatedType" name="RelatedType" class="form-select">
+                @foreach (var t in AcxiomCRM.Models.FollowUpTransitions.RelatedTypes)
+                {
+                    <option value="@t" selected="@(Model.RelatedType == t)">@t</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="RelatedId" class="form-label">Related record ID</label>
+            <input asp-for="RelatedId" class="form-control" type="number" min="1" aria-describedby="RelatedId-error" />
+            <span asp-validation-for="RelatedId" class="text-danger" id="RelatedId-error"></span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FollowUpDate" class="form-label"></label>
+        <input asp-for="FollowUpDate" class="form-control" type="date" aria-describedby="FollowUpDate-error" />
+        <span asp-validation-for="FollowUpDate" class="text-danger" id="FollowUpDate-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Subject" class="form-label"></label>
+        <input asp-for="Subject" class="form-control" aria-describedby="Subject-error" />
+        <span asp-validation-for="Subject" class="text-danger" id="Subject-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FollowUpType" class="form-label"></label>
+        <select asp-for="FollowUpType" class="form-select">
+            @foreach (var t in AcxiomCRM.Models.FollowUpTransitions.FollowUpTypes)
+            {
+                <option value="@t">@t</option>
+            }
+        </select>
+    </div>
+    @if (isSales)
+    {
+        <input type="hidden" asp-for="AssignedTo" />
+        <p>Assigned to you.</p>
+    }
+    else
+    {
+        <div class="mb-3">
+            <label for="AssignedTo" class="form-label">Assigned to (Sales Executive)</label>
+            <select id="AssignedTo" name="AssignedTo" class="form-select">
+                <option value="">Select sales executive</option>
+                @foreach (var u in sales)
+                {
+                    <option value="@u.Id" selected="@(Model.AssignedTo == u.Id)">@u.Email (@u.FullName)</option>
+                }
+            </select>
+            <span asp-validation-for="AssignedTo" class="text-danger"></span>
+        </div>
+    }
+    <div class="mb-3">
+        <label asp-for="Remarks" class="form-label"></label>
+        <textarea asp-for="Remarks" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Schedule Follow-Up</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

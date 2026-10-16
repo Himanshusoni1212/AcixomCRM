@@ -1,0 +1,88 @@
+@model List<AcxiomCRM.Models.Activity>
+@{
+    ViewData["Title"] = "Activities | AcxiomCRM";
+    string type = ViewBag.Type as string ?? "";
+    string status = ViewBag.Status as string ?? "";
+    string assignee = ViewBag.Assignee as string ?? "";
+    string df = ViewBag.DateFrom as string ?? "";
+    string dt = ViewBag.DateTo as string ?? "";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int total = ViewBag.Total ?? 0;
+}
+<h1>Activities</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+
+<form method="get" class="row g-2 mb-3" role="search" aria-label="Search activities">
+    <div class="col-md-2">
+        <label for="type" class="form-label">Type</label>
+        <select id="type" name="type" class="form-select">
+            <option value="">All</option>
+            @foreach (var t in AcxiomCRM.Models.ActivityTypes.Types)
+            {
+                <option value="@t" selected="@(type == t)">@t</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="dateFrom" class="form-label">From date</label>
+        <input id="dateFrom" name="dateFrom" type="date" value="@df" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label for="dateTo" class="form-label">To date</label>
+        <input id="dateTo" name="dateTo" type="date" value="@dt" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.ActivityTypes.Statuses)
+            {
+                <option value="@st" selected="@(status == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="assignee" class="form-label">Assigned user</label>
+        <input id="assignee" name="assignee" value="@assignee" class="form-control" autocomplete="off" aria-describedby="assignee-hint" />
+        <div id="assignee-hint" class="form-text">Filter by assignee name or email.</div>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Search activities</button>
+    </div>
+</form>
+
+<p><a asp-action="Create" class="btn btn-primary">Create activity</a> <span class="text-muted">@total record(s)</span></p>
+
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Type</th><th>Subject</th><th>Date</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr>
+            <td>@a.ActivityType</td>
+            <td>@a.Subject</td>
+            <td>@a.ActivityDate.ToString("yyyy-MM-dd")</td>
+            <td>@a.Status</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@a.ActivityId">View details</a> |
+                <a asp-action="Edit" asp-route-id="@a.ActivityId">Edit activity</a> |
+                <a asp-action="Delete" asp-route-id="@a.ActivityId">Delete activity</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+<nav aria-label="Activity pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")">
+            <a class="page-link" asp-action="Index" asp-route-type="@type" asp-route-dateFrom="@df" asp-route-dateTo="@dt" asp-route-status="@status" asp-route-assignee="@assignee" asp-route-page="@p">Page @p</a>
+        </li>
+    }
+</ul>
+</nav>

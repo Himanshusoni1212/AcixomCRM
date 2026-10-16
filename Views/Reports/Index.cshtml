@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Reports | AcxiomCRM";
+}
+<h1>Reports</h1>
+<p>All reports respect your role scope. Use Export CSV for offline analysis.</p>
+<ul>
+    <li><a asp-action="Customers">Customer Report</a> - list, status, owner, created date</li>
+    <li><a asp-action="Leads">Lead Report</a> - source, status, owner, conversion</li>
+    <li><a asp-action="FollowUps">Follow-Up Report</a> - planned, completed, missed, overdue</li>
+    <li><a asp-action="Opportunities">Opportunity Report</a> - stage, amount, probability, close date</li>
+    <li><a asp-action="Pipeline">Pipeline Report</a> - stage-wise and owner-wise with weighted values</li>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <li><a asp-action="Sales">Sales and Conversion Report</a> - lead conversion and opportunity outcomes</li>
+        <li><a asp-action="UserActivity">User Activity Report</a> - actions and counts</li>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <li><a asp-action="Audit">Audit Report</a> - security and business events</li>
+    }
+</ul>

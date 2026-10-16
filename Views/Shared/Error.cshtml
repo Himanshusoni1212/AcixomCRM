@@ -1,0 +1,20 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Something went wrong (500) | AcxiomCRM";
+    ViewData["Description"] = "An unexpected AcxiomCRM error occurred. The issue has been logged with a request ID for the administrator to investigate.";
+}
+
+<h1>Something went wrong.</h1>
+<p>An unexpected error occurred while processing the request. It has been logged for the administrator.</p>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<p>
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go to Dashboard</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Go to Home</a>
+</p>

@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Sales and Conversion Report | AcxiomCRM";
+    var leadByStatus = ViewBag.LeadByStatus as Dictionary<string, int> ?? new();
+}
+<h1>Sales and Conversion Report</h1>
+<p><a asp-action="Sales" asp-route-export="csv" class="btn btn-secondary">Export CSV</a></p>
+<h2>Lead conversion</h2>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Status</th><th>Count</th></tr></thead>
+    <tbody>
+    @foreach (var kv in leadByStatus)
+    {
+        <tr><td>@kv.Key</td><td>@kv.Value</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<p>Lead conversion rate: <strong>@ViewBag.LeadConversionRate%</strong></p>
+<h2>Opportunity outcomes</h2>
+<p>Won: <strong>@ViewBag.Won</strong>, Lost: <strong>@ViewBag.Lost</strong>, Open: <strong>@ViewBag.Open</strong></p>
+<p>Win rate: <strong>@ViewBag.WinRate%</strong>, Won amount: <strong>@(((decimal)ViewBag.WonAmount).ToString("N2"))</strong></p>

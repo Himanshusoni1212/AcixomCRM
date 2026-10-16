@@ -1,0 +1,26 @@
+@model List<object>
+@{
+    ViewData["Title"] = "User Activity Report | AcxiomCRM";
+}
+<h1>User Activity Report</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <label for="auditAction" class="form-label">Action</label>
+        <input id="auditAction" name="auditAction" value="@ViewBag.Action" class="form-control" />
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <a asp-action="UserActivity" asp-route-auditAction="@ViewBag.Action" asp-route-export="csv" class="btn btn-secondary">Export CSV</a>
+    </div>
+</form>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>User</th><th>Action</th><th>Count</th></tr></thead>
+    <tbody>
+    @foreach (dynamic r in Model)
+    {
+        <tr><td>@r.User</td><td>@r.Action</td><td>@r.Count</td></tr>
+    }
+    </tbody>
+</table>
+</div>

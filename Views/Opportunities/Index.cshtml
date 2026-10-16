@@ -1,0 +1,90 @@
+@model List<AcxiomCRM.Models.Opportunity>
+@{
+    ViewData["Title"] = "Opportunities | AcxiomCRM";
+    string q = ViewBag.Query as string ?? "";
+    string customer = ViewBag.Customer as string ?? "";
+    string stage = ViewBag.Stage as string ?? "";
+    string status = ViewBag.Status as string ?? "";
+    string sort = ViewBag.Sort as string ?? "name";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int total = ViewBag.Total ?? 0;
+    var names = ViewBag.CustomerNames as Dictionary<int, string> ?? new();
+}
+<h1>Opportunities</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+@if (TempData["Error"] is string e) { <div class="alert alert-danger" role="alert">@e</div> }
+
+<form method="get" class="row g-2 mb-3" role="search" aria-label="Search opportunities">
+    <div class="col-md-3">
+        <label for="q" class="form-label">Search name</label>
+        <input id="q" name="q" value="@q" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-3">
+        <label for="customer" class="form-label">Customer</label>
+        <input id="customer" name="customer" value="@customer" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-2">
+        <label for="stage" class="form-label">Stage</label>
+        <select id="stage" name="stage" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.OpportunityTransitions.Stages)
+            {
+                <option value="@st" selected="@(stage == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            <option value="Open" selected="@(status == "Open")">Open</option>
+            <option value="Won" selected="@(status == "Won")">Won</option>
+            <option value="Lost" selected="@(status == "Lost")">Lost</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Search opportunities</button>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create opportunity</a>
+    <a asp-action="Pipeline" class="btn btn-secondary">View sales pipeline</a>
+    <span class="text-muted">@total record(s)</span>
+</p>
+
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Customer</th><th>Stage</th><th>Amount</th><th>Prob.</th><th>Weighted</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var o in Model)
+    {
+        <tr>
+            <td>@o.OpportunityName</td>
+            <td>@(names.TryGetValue(o.CustomerId, out var n) ? n : o.CustomerId.ToString())</td>
+            <td>@o.Stage</td>
+            <td>@o.Amount.ToString("N2")</td>
+            <td>@o.Probability%</td>
+            <td>@((o.Amount * o.Probability / 100).ToString("N2"))</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@o.OpportunityId">View details</a> |
+                <a asp-action="Edit" asp-route-id="@o.OpportunityId">Edit opportunity</a> |
+                <a asp-action="Delete" asp-route-id="@o.OpportunityId">Delete opportunity</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+<nav aria-label="Opportunity pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")">
+            <a class="page-link" asp-action="Index" asp-route-q="@q" asp-route-customer="@customer" asp-route-stage="@stage" asp-route-status="@status" asp-route-sort="@sort" asp-route-page="@p">Page @p</a>
+        </li>
+    }
+</ul>
+</nav>

@@ -1,0 +1,25 @@
+@model List<AcxiomCRM.Models.FollowUp>
+@{
+    ViewData["Title"] = "Overdue follow-ups | AcxiomCRM";
+    var names = ViewBag.RelatedNames as Dictionary<int, string> ?? new();
+}
+<h1>Overdue follow-ups</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+<p><a asp-action="Index" class="btn btn-secondary">All follow-ups</a> <a asp-action="Upcoming" class="btn btn-secondary">Upcoming follow-ups</a></p>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Date</th><th>Subject</th><th>Related</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var f in Model)
+    {
+        <tr>
+            <td>@f.FollowUpDate.ToString("yyyy-MM-dd")</td>
+            <td>@f.Subject</td>
+            <td>@(names.TryGetValue(f.FollowUpId, out var n) ? $"{f.RelatedType}: {n}" : f.RelatedType)</td>
+            <td><a asp-action="Details" asp-route-id="@f.FollowUpId">View details</a></td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+@if (!Model.Any()) { <p>No overdue follow-ups.</p> }

@@ -1,0 +1,21 @@
+@model AcxiomCRM.Models.Opportunity
+@{
+    ViewData["Title"] = "Opportunity details | AcxiomCRM";
+}
+<h1>Opportunity details</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+<dl class="row">
+    <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@Model.OpportunityName</dd>
+    <dt class="col-sm-3">Customer</dt><dd class="col-sm-9">@(Model.Customer?.CustomerName ?? Model.CustomerId.ToString())</dd>
+    <dt class="col-sm-3">Stage</dt><dd class="col-sm-9">@Model.Stage</dd>
+    <dt class="col-sm-3">Status</dt><dd class="col-sm-9">@Model.Status</dd>
+    <dt class="col-sm-3">Amount</dt><dd class="col-sm-9">@Model.Amount.ToString("N2")</dd>
+    <dt class="col-sm-3">Probability</dt><dd class="col-sm-9">@Model.Probability%</dd>
+    <dt class="col-sm-3">Weighted pipeline</dt><dd class="col-sm-9">@((Model.Amount * Model.Probability / 100).ToString("N2")) (Amount x Probability / 100)</dd>
+    <dt class="col-sm-3">Expected close</dt><dd class="col-sm-9">@Model.ExpectedCloseDate?.ToString("yyyy-MM-dd")</dd>
+</dl>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.OpportunityId" class="btn btn-primary">Edit opportunity</a>
+    <a asp-action="Pipeline" class="btn btn-secondary">View sales pipeline</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+</p>

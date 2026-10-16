@@ -1,0 +1,44 @@
+@model List<AcxiomCRM.Models.FollowUp>
+@{
+    ViewData["Title"] = "Follow-Up Report | AcxiomCRM";
+    string status = ViewBag.Status as string ?? "";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    var emails = ViewBag.AssigneeEmails as Dictionary<string, string> ?? new();
+}
+<h1>Follow-Up Report</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.FollowUpTransitions.Statuses)
+            {
+                <option value="@st" selected="@(status == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <a asp-action="FollowUps" asp-route-status="@status" asp-route-export="csv" class="btn btn-secondary">Export CSV</a>
+    </div>
+</form>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Date</th><th>Subject</th><th>Status</th><th>Overdue</th><th>Assignee</th></tr></thead>
+    <tbody>
+    @foreach (var f in Model)
+    {
+        <tr><td>@f.FollowUpDate.ToString("yyyy-MM-dd")</td><td>@f.Subject</td><td>@f.Status</td><td>@(f.Status == "Planned" && f.FollowUpDate.Date < DateTime.UtcNow.Date ? "Yes" : "No")</td><td>@(f.AssignedTo != null && emails.TryGetValue(f.AssignedTo, out var e) ? e : "-")</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<nav aria-label="Follow-up report pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")"><a class="page-link" asp-action="FollowUps" asp-route-status="@status" asp-route-page="@p">Page @p</a></li>
+    }
+</ul>
+</nav>

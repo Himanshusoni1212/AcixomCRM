@@ -1,0 +1,54 @@
+@model List<AcxiomCRM.Models.AuditLog>
+@{
+    ViewData["Title"] = "Audit log | AcxiomCRM";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int total = ViewBag.Total ?? 0;
+}
+<h1>Audit log</h1>
+<p>Append-only: entries cannot be edited or deleted. Admin sees all. Manager sees team view (v1 shows recent entries).</p>
+<form method="get" class="row g-2 mb-3" role="search" aria-label="Filter audit log">
+    <div class="col-md-2">
+        <label for="auditAction" class="form-label">Action</label>
+        <input id="auditAction" name="auditAction" value="@ViewBag.Action" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-2">
+        <label for="module" class="form-label">Module</label>
+        <input id="module" name="module" value="@ViewBag.Module" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-2">
+        <label for="user" class="form-label">User ID</label>
+        <input id="user" name="user" value="@ViewBag.User" class="form-control" autocomplete="off" />
+    </div>
+    <div class="col-md-2">
+        <label for="from" class="form-label">From date</label>
+        <input id="from" name="from" type="date" value="@ViewBag.From" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label for="to" class="form-label">To date</label>
+        <input id="to" name="to" type="date" value="@ViewBag.To" class="form-control" />
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Filter audit log</button>
+    </div>
+</form>
+<p class="text-muted">@total record(s). No secrets are stored or displayed here.</p>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Time (UTC)</th><th>User</th><th>Action</th><th>Module</th><th>Record</th><th>Result</th><th>IP</th></tr></thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr><td>@a.CreatedDate.ToString("u")</td><td>@a.UserId</td><td>@a.Action</td><td>@a.EntityName</td><td>@a.RecordId</td><td>@a.Result</td><td>@a.IpAddress</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<nav aria-label="Audit log pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")"><a class="page-link" asp-action="Index" asp-route-user="@ViewBag.User" asp-route-module="@ViewBag.Module" asp-route-auditAction="@ViewBag.Action" asp-route-from="@ViewBag.From" asp-route-to="@ViewBag.To" asp-route-page="@p">Page @p</a></li>
+    }
+</ul>
+</nav>

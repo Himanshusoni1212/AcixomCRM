@@ -1,0 +1,81 @@
+@model AcxiomCRM.Models.Opportunity
+@{
+    ViewData["Title"] = "Edit opportunity | AcxiomCRM";
+    var customers = ViewBag.Customers as List<AcxiomCRM.Models.Customer> ?? new();
+    var sales = ViewBag.SalesUsers as IList<AcxiomCRM.Models.ApplicationUser> ?? new List<AcxiomCRM.Models.ApplicationUser>();
+    var allowed = ViewBag.Allowed as List<string> ?? new();
+    bool isSales = User.IsInRole("SalesExecutive");
+}
+<h1>Edit opportunity</h1>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form asp-action="Edit" method="post" novalidate>
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="OpportunityId" />
+    <input type="hidden" asp-for="LeadId" />
+    <div class="mb-3">
+        <label asp-for="OpportunityName" class="form-label"></label>
+        <input asp-for="OpportunityName" class="form-control" aria-describedby="OpportunityName-error" />
+        <span asp-validation-for="OpportunityName" class="text-danger" id="OpportunityName-error"></span>
+    </div>
+    <div class="mb-3">
+        <label for="CustomerId" class="form-label">Customer</label>
+        <select id="CustomerId" name="CustomerId" class="form-select">
+            @foreach (var c in customers)
+            {
+                <option value="@c.CustomerId" selected="@(Model.CustomerId == c.CustomerId)">@c.CustomerName (@c.CustomerCode)</option>
+            }
+        </select>
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Stage" class="form-label"></label>
+        <select asp-for="Stage" class="form-select" aria-describedby="Stage-error">
+            @foreach (var st in allowed)
+            {
+                <option value="@st" selected="@(Model.Stage == st)">@st</option>
+            }
+        </select>
+        <span asp-validation-for="Stage" class="text-danger" id="Stage-error"></span>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Amount" class="form-label"></label>
+            <input asp-for="Amount" class="form-control" type="number" step="0.01" min="0" aria-describedby="Amount-error" />
+            <span asp-validation-for="Amount" class="text-danger" id="Amount-error"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Probability" class="form-label"></label>
+            <input asp-for="Probability" class="form-control" type="number" min="0" max="100" aria-describedby="Probability-error" />
+            <span asp-validation-for="Probability" class="text-danger" id="Probability-error"></span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ExpectedCloseDate" class="form-label"></label>
+        <input asp-for="ExpectedCloseDate" class="form-control" type="date" aria-describedby="ExpectedCloseDate-error" />
+        <span asp-validation-for="ExpectedCloseDate" class="text-danger" id="ExpectedCloseDate-error"></span>
+    </div>
+    @if (isSales)
+    {
+        <input type="hidden" asp-for="OwnerId" />
+    }
+    else
+    {
+        <div class="mb-3">
+            <label for="OwnerId" class="form-label">Assigned to (Sales Executive)</label>
+            <select id="OwnerId" name="OwnerId" class="form-select">
+                @foreach (var u in sales)
+                {
+                    <option value="@u.Id" selected="@(Model.OwnerId == u.Id)">@u.Email (@u.FullName)</option>
+                }
+            </select>
+            <span asp-validation-for="OwnerId" class="text-danger"></span>
+        </div>
+    }
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label"></label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Opportunity</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

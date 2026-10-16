@@ -1,0 +1,43 @@
+@model List<AcxiomCRM.Models.Opportunity>
+@{
+    ViewData["Title"] = "Opportunity Report | AcxiomCRM";
+    string stage = ViewBag.Stage as string ?? "";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+<h1>Opportunity Report</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <label for="stage" class="form-label">Stage</label>
+        <select id="stage" name="stage" class="form-select">
+            <option value="">All</option>
+            @foreach (var st in AcxiomCRM.Models.OpportunityTransitions.Stages)
+            {
+                <option value="@st" selected="@(stage == st)">@st</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <a asp-action="Opportunities" asp-route-stage="@stage" asp-route-export="csv" class="btn btn-secondary">Export CSV</a>
+    </div>
+</form>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Stage</th><th>Amount</th><th>Probability</th><th>Weighted</th><th>Close Date</th></tr></thead>
+    <tbody>
+    @foreach (var o in Model)
+    {
+        <tr><td>@o.OpportunityName</td><td>@o.Stage</td><td>@o.Amount.ToString("N2")</td><td>@o.Probability%</td><td>@((o.Amount * o.Probability / 100).ToString("N2"))</td><td>@o.ExpectedCloseDate?.ToString("yyyy-MM-dd")</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<nav aria-label="Opportunity report pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")"><a class="page-link" asp-action="Opportunities" asp-route-stage="@stage" asp-route-page="@p">Page @p</a></li>
+    }
+</ul>
+</nav>

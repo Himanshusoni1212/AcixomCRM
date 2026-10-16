@@ -1,0 +1,41 @@
+@model List<AcxiomCRM.Models.AuditLog>
+@{
+    ViewData["Title"] = "Audit Report | AcxiomCRM";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+<h1>Audit Report</h1>
+<p>Admin only.</p>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <label for="auditAction" class="form-label">Action</label>
+        <input id="auditAction" name="auditAction" value="@ViewBag.Action" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label for="module" class="form-label">Module</label>
+        <input id="module" name="module" value="@ViewBag.Module" class="form-control" />
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <a asp-action="Audit" asp-route-auditAction="@ViewBag.Action" asp-route-module="@ViewBag.Module" asp-route-export="csv" class="btn btn-secondary">Export CSV</a>
+    </div>
+</form>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Time (UTC)</th><th>Action</th><th>Module</th><th>Record</th><th>Result</th></tr></thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr><td>@a.CreatedDate.ToString("u")</td><td>@a.Action</td><td>@a.EntityName</td><td>@a.RecordId</td><td>@a.Result</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<nav aria-label="Audit report pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")"><a class="page-link" asp-action="Audit" asp-route-auditAction="@ViewBag.Action" asp-route-module="@ViewBag.Module" asp-route-page="@p">Page @p</a></li>
+    }
+</ul>
+</nav>

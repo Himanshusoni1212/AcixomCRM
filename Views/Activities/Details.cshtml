@@ -1,0 +1,20 @@
+@model AcxiomCRM.Models.Activity
+@{
+    ViewData["Title"] = "Activity details | AcxiomCRM";
+}
+<h1>Activity details</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+<dl class="row">
+    <dt class="col-sm-3">Type</dt><dd class="col-sm-9">@Model.ActivityType</dd>
+    <dt class="col-sm-3">Subject</dt><dd class="col-sm-9">@Model.Subject</dd>
+    <dt class="col-sm-3">Description</dt><dd class="col-sm-9">@Model.Description</dd>
+    <dt class="col-sm-3">Date</dt><dd class="col-sm-9">@Model.ActivityDate.ToString("yyyy-MM-dd")</dd>
+    <dt class="col-sm-3">Customer</dt><dd class="col-sm-9">@ViewBag.CustomerName</dd>
+    <dt class="col-sm-3">Lead</dt><dd class="col-sm-9">@ViewBag.LeadName</dd>
+    <dt class="col-sm-3">Assigned to</dt><dd class="col-sm-9">@ViewBag.AssigneeEmail</dd>
+    <dt class="col-sm-3">Status</dt><dd class="col-sm-9">@Model.Status</dd>
+</dl>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.ActivityId" class="btn btn-primary">Edit activity</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+</p>

@@ -1,0 +1,47 @@
+@using AcxiomCRM.Models
+@model List<(ApplicationUser, IList<string>)>
+@{
+    ViewData["Title"] = "Users | AcxiomCRM";
+}
+<h1>User administration</h1>
+<p>Admin only. Each user has exactly one primary role.</p>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+@if (TempData["Error"] is string e) { <div class="alert alert-danger" role="alert">@e</div> }
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Email</th><th>Name</th><th>Active</th><th>Roles</th><th>Set role</th><th>Status</th></tr></thead>
+    <tbody>
+    @foreach (var (u, roles) in Model)
+    {
+        <tr>
+            <td>@u.Email</td>
+            <td>@u.FullName</td>
+            <td>@(u.IsActive ? "Yes" : "No")</td>
+            <td>@string.Join(", ", roles)</td>
+            <td>
+                <form asp-action="SetRole" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@u.Id" />
+                    <label class="visually-hidden" for="role-@u.Id">Role for @u.Email</label>
+                    <select id="role-@u.Id" name="role" class="form-select form-select-sm d-inline w-auto">
+                        @foreach (var r in Roles.All)
+                        {
+                            <option value="@r" selected="@(roles.Contains(r))">@r</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">Save role</button>
+                </form>
+            </td>
+            <td>
+                <form asp-action="SetActive" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@u.Id" />
+                    <input type="hidden" name="active" value="@((!u.IsActive).ToString().ToLower())" />
+                    <button type="submit" class="btn btn-secondary btn-sm">@(u.IsActive ? "Deactivate user" : "Activate user")</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>

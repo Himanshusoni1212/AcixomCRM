@@ -1,0 +1,42 @@
+@model List<AcxiomCRM.Models.Customer>
+@{
+    ViewData["Title"] = "Customer Report | AcxiomCRM";
+    string status = ViewBag.Status as string ?? "";
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    var emails = ViewBag.OwnerEmails as Dictionary<string, string> ?? new();
+}
+<h1>Customer Report</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="">All</option>
+            <option value="Active" selected="@(status == "Active")">Active</option>
+            <option value="Inactive" selected="@(status == "Inactive")">Inactive</option>
+        </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Apply filters</button>
+        <a asp-action="Customers" asp-route-status="@status" asp-route-export="csv" class="btn btn-secondary">Export CSV</a>
+    </div>
+</form>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Status</th><th>Owner</th><th>Created</th></tr></thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+        <tr><td>@c.CustomerName</td><td>@c.Status</td><td>@(c.OwnerId != null && emails.TryGetValue(c.OwnerId, out var e) ? e : "-")</td><td>@c.CreatedDate.ToString("yyyy-MM-dd")</td></tr>
+    }
+    </tbody>
+</table>
+</div>
+<nav aria-label="Customer report pages">
+<ul class="pagination">
+    @for (int p = 1; p <= totalPages; p++)
+    {
+        <li class="page-item @(p == page ? "active" : "")"><a class="page-link" asp-action="Customers" asp-route-status="@status" asp-route-page="@p">Page @p</a></li>
+    }
+</ul>
+</nav>

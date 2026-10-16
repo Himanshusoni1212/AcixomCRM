@@ -1,0 +1,12 @@
+@model AcxiomCRM.Models.Opportunity
+@{
+    ViewData["Title"] = "Delete opportunity | AcxiomCRM";
+}
+<h1>Delete opportunity</h1>
+<div class="alert alert-warning" role="alert">Are you sure you want to delete <strong>@Model.OpportunityName</strong>? This cannot be undone.</div>
+<form asp-action="Delete" method="post" onsubmit="return confirm('Delete this opportunity?');">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="OpportunityId" />
+    <button type="submit" class="btn btn-danger">Delete opportunity</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

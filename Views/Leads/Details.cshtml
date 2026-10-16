@@ -1,0 +1,25 @@
+@model AcxiomCRM.Models.Lead
+@{
+    ViewData["Title"] = "Lead details | AcxiomCRM";
+}
+<h1>Lead details</h1>
+@if (TempData["Success"] is string s) { <div class="alert alert-success" role="status">@s</div> }
+@if (TempData["Error"] is string e) { <div class="alert alert-danger" role="alert">@e</div> }
+<dl class="row">
+    <dt class="col-sm-3">Code</dt><dd class="col-sm-9">@Model.LeadCode</dd>
+    <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@Model.LeadName</dd>
+    <dt class="col-sm-3">Email</dt><dd class="col-sm-9">@if (!string.IsNullOrWhiteSpace(Model.Email)) { <a href="mailto:@Model.Email">@Model.Email</a> } else { <span>-</span> }</dd>
+    <dt class="col-sm-3">Phone</dt><dd class="col-sm-9">@if (!string.IsNullOrWhiteSpace(Model.Phone)) { <a href="tel:@Model.Phone">@Model.Phone</a> } else { <span>-</span> }</dd>
+    <dt class="col-sm-3">Company</dt><dd class="col-sm-9">@Model.CompanyName</dd>
+    <dt class="col-sm-3">Source</dt><dd class="col-sm-9">@Model.Source</dd>
+    <dt class="col-sm-3">Status</dt><dd class="col-sm-9">@Model.Status</dd>
+    <dt class="col-sm-3">Expected value</dt><dd class="col-sm-9">@Model.ExpectedValue</dd>
+</dl>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.LeadId" class="btn btn-primary">Edit lead</a>
+    @if (Model.Status == "Qualified")
+    {
+        <a asp-action="Convert" asp-route-id="@Model.LeadId" class="btn btn-primary">Convert lead</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+</p>

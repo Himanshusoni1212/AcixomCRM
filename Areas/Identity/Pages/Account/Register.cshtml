@@ -1,0 +1,40 @@
+@page
+@model AcxiomCRM.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register | AcxiomCRM";
+    ViewData["Description"] = "Create an AcxiomCRM account with your name, email and password. Consent to the Privacy Policy is required and new accounts start as Sales Executive.";
+}
+<h1>Create your account</h1>
+<p>Register to use the CRM. Your email is used only for sign-in and account administration, as described in the <a asp-area="" asp-controller="Legal" asp-action="Privacy">Privacy Policy</a>.</p>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form method="post" novalidate>
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label asp-for="Input.FullName" class="form-label">Full name</label>
+        <input asp-for="Input.FullName" class="form-control" autocomplete="name" aria-describedby="FullName-error" />
+        <span asp-validation-for="Input.FullName" class="text-danger" id="FullName-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Email" class="form-label">Email</label>
+        <input asp-for="Input.Email" class="form-control" type="email" autocomplete="email" aria-describedby="Email-error" />
+        <span asp-validation-for="Input.Email" class="text-danger" id="Email-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Password" class="form-label">Password (at least 8 characters)</label>
+        <input asp-for="Input.Password" class="form-control" type="password" autocomplete="new-password" aria-describedby="Password-error" />
+        <span asp-validation-for="Input.Password" class="text-danger" id="Password-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.ConfirmPassword" class="form-label">Confirm password</label>
+        <input asp-for="Input.ConfirmPassword" class="form-control" type="password" autocomplete="new-password" />
+        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="Input.AcceptPrivacy" class="form-check-input" />
+        <label asp-for="Input.AcceptPrivacy" class="form-check-label">I agree to the processing of my details as described in the <a asp-area="" asp-controller="Legal" asp-action="Privacy">Privacy Policy</a>.</label>
+        <span asp-validation-for="Input.AcceptPrivacy" class="text-danger d-block"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create account</button>
+</form>
+<p class="mt-3">Already registered? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Sign in</a>.</p>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

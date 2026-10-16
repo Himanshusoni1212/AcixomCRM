@@ -1,0 +1,87 @@
+@model AcxiomCRM.Models.Activity
+@{
+    ViewData["Title"] = "Edit activity | AcxiomCRM";
+    var customers = ViewBag.Customers as List<AcxiomCRM.Models.Customer> ?? new();
+    var leads = ViewBag.Leads as List<AcxiomCRM.Models.Lead> ?? new();
+    var sales = ViewBag.SalesUsers as IList<AcxiomCRM.Models.ApplicationUser> ?? new List<AcxiomCRM.Models.ApplicationUser>();
+    bool isSales = User.IsInRole("SalesExecutive");
+}
+<h1>Edit activity</h1>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form asp-action="Edit" method="post" novalidate>
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ActivityId" />
+    <div class="mb-3">
+        <label asp-for="ActivityType" class="form-label"></label>
+        <select asp-for="ActivityType" class="form-select">
+            @foreach (var t in AcxiomCRM.Models.ActivityTypes.Types)
+            {
+                <option value="@t" selected="@(Model.ActivityType == t)">@t</option>
+            }
+        </select>
+        <span asp-validation-for="ActivityType" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Subject" class="form-label"></label>
+        <input asp-for="Subject" class="form-control" aria-describedby="Subject-error" />
+        <span asp-validation-for="Subject" class="text-danger" id="Subject-error"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ActivityDate" class="form-label"></label>
+        <input asp-for="ActivityDate" class="form-control" type="date" />
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="CustomerId" class="form-label">Customer (optional)</label>
+            <select id="CustomerId" name="CustomerId" class="form-select">
+                <option value="">None</option>
+                @foreach (var c in customers)
+                {
+                    <option value="@c.CustomerId" selected="@(Model.CustomerId == c.CustomerId)">@c.CustomerName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="LeadId" class="form-label">Lead (optional)</label>
+            <select id="LeadId" name="LeadId" class="form-select">
+                <option value="">None</option>
+                @foreach (var l in leads)
+                {
+                    <option value="@l.LeadId" selected="@(Model.LeadId == l.LeadId)">@l.LeadName</option>
+                }
+            </select>
+        </div>
+    </div>
+    @if (isSales)
+    {
+        <input type="hidden" asp-for="AssignedTo" />
+    }
+    else
+    {
+        <div class="mb-3">
+            <label for="AssignedTo" class="form-label">Assigned to (Sales Executive)</label>
+            <select id="AssignedTo" name="AssignedTo" class="form-select">
+                @foreach (var u in sales)
+                {
+                    <option value="@u.Id" selected="@(Model.AssignedTo == u.Id)">@u.Email (@u.FullName)</option>
+                }
+            </select>
+        </div>
+    }
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            @foreach (var st in AcxiomCRM.Models.ActivityTypes.Statuses)
+            {
+                <option value="@st" selected="@(Model.Status == st)">@st</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Activity</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /Home
+Allow: /Legal/Privacy
+Allow: /Legal/Terms
+Allow: /Legal/Cookies
+Allow: /Legal/Refunds
+Disallow: /Identity/
+Disallow: /Users
+Disallow: /AuditLogs
+Disallow: /api/
+
+# TODO launch: add absolute sitemap URL once the custom domain is connected,
+# e.g. Sitemap: https://crm.example.in/sitemap.xml
